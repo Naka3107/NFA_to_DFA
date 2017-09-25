@@ -5,7 +5,7 @@ import httplib, urllib, base64, json
 ###############################################
 
 # Replace the subscription_key string value with your valid subscription key.
-subscription_key = '13hc77781f7e4b19b5fcdd72a8df7156'
+subscription_key = '4c9d869cdd3a4adba127a880088daac4'
 
 # Replace or verify the region.
 #
@@ -48,3 +48,24 @@ try:
 
 except Exception as e:
     print("[Errno {0}] {1}".format(e.errno, e.strerror))
+
+# Method for reading faces
+def readFace():
+    # The URL of a JPEG image to analyze.
+    body = "{'url':'https://upload.wikimedia.org/wikipedia/commons/c/c3/RH_Louise_Lillian_Gish.jpg'}"
+
+    try:
+        # Execute the REST API call and get the response.
+        conn = httplib.HTTPSConnection('westcentralus.api.cognitive.microsoft.com')
+        conn.request("POST", "/face/v1.0/detect?%s" % params, body, headers)
+        response = conn.getresponse()
+        data = response.read()
+
+        # 'data' contains the JSON data. The following formats the JSON data for display.
+        parsed = json.loads(data)
+        print ("Response:")
+        print (json.dumps(parsed, sort_keys=True, indent=2))
+        conn.close()
+
+    except Exception as e:
+        print("[Errno {0}] {1}".format(e.errno, e.strerror))
