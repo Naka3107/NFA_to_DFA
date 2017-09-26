@@ -1,4 +1,4 @@
-import httplib, urllib, base64, json
+import httplib, urllib, base64, json, cognitive_face
 
 ###############################################
 #### Update or verify the following values. ###
@@ -26,33 +26,14 @@ headers = {
 # Request parameters.
 params = urllib.urlencode({
     'returnFaceId': 'true',
-    'returnFaceLandmarks': 'false',
-    'returnFaceAttributes': 'age,gender,headPose,smile,facialHair,glasses,emotion,hair,makeup,occlusion,accessories,blur,exposure,noise',
+    'returnFaceLandmarks': 'true',
+    'returnFaceAttributes': 'age,gender,smile,facialHair,hair',
+    #'age,gender,headPose,smile,facialHair,glasses,emotion,hair,makeup,occlusion,accessories,blur,exposure,noise'
 })
 
-# The URL of a JPEG image to analyze.
-body = "{'url':'https://upload.wikimedia.org/wikipedia/commons/c/c3/RH_Louise_Lillian_Gish.jpg'}"
-
-try:
-    # Execute the REST API call and get the response.
-    conn = httplib.HTTPSConnection('westcentralus.api.cognitive.microsoft.com')
-    conn.request("POST", "/face/v1.0/detect?%s" % params, body, headers)
-    response = conn.getresponse()
-    data = response.read()
-
-    # 'data' contains the JSON data. The following formats the JSON data for display.
-    parsed = json.loads(data)
-    print ("Response:")
-    print (json.dumps(parsed, sort_keys=True, indent=2))
-    conn.close()
-
-except Exception as e:
-    print("[Errno {0}] {1}".format(e.errno, e.strerror))
-
 # Method for reading faces
-def readFace():
-    # The URL of a JPEG image to analyze.
-    body = "{'url':'https://upload.wikimedia.org/wikipedia/commons/c/c3/RH_Louise_Lillian_Gish.jpg'}"
+def readFace(body):
+    result = ''
 
     try:
         # Execute the REST API call and get the response.
@@ -63,9 +44,14 @@ def readFace():
 
         # 'data' contains the JSON data. The following formats the JSON data for display.
         parsed = json.loads(data)
-        print ("Response:")
-        print (json.dumps(parsed, sort_keys=True, indent=2))
+        # print ("Response:")
+        # print (json.dumps(parsed, sort_keys=True, indent=2))
+
+        result = (json.dumps(parsed, sort_keys=True, indent=2))
+
         conn.close()
 
     except Exception as e:
         print("[Errno {0}] {1}".format(e.errno, e.strerror))
+
+    return result
