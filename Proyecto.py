@@ -20,8 +20,8 @@ def main():
         PATH = PATH.replace('\\', '/')
         PATH = PATH + "/Images/"
 
-        foto1 = PATH + "a1.jpg"
-        foto2 = PATH + "a2.jpg"
+        foto1 = PATH + "b1.jpg"
+        foto2 = PATH + "b2.jpg"
 
         showImg1 = Image.open(foto1, 'r')
         showImg1.show()
