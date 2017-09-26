@@ -1,5 +1,5 @@
 #coding: UTF-8
-import detect_faces, info_analizer, os, inspect, webbrowser
+import detect_faces, info_analizer, os, inspect, webbrowser,list_faces,cognitive_face
 from PIL import Image
 
 def main():
@@ -38,6 +38,22 @@ def main():
 
     print infoPhoto1
 
-    info_analizer.compare(infoPhoto1, infoPhoto2)
+    jsonList1 = {"name": "sample_list_1"}
+    jsonList2 = {"name": "sample_list_2"}
+
+    list1=list_faces.ListFaces(jsonList1)
+
+    print (list1)
+
+    #print (infoPhoto2)
+    #print (infoPhoto1)
+
+    #cognitive_face.face_list.add_face(foto1,'{"faceListId":"pollo"}')
+
+    #print("CARA:\n")
+    #print(cognitive_face.face_list.get('{"faceListId":"pollo"}'))
+
+    #cognitive_face.face.find_similars(infoPhoto1[0]['faceId']);
+    #info_analizer.compare(infoPhoto1, infoPhoto2)
 
 main()
