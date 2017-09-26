@@ -37,6 +37,7 @@ def readFace(path, isURL):
     result = ''
 
     if isURL:
+        headers['Content-Type'] = 'application/json'
         body = path
     else:
         headers['Content-Type'] = 'application/octet-stream'
