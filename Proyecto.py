@@ -1,5 +1,5 @@
 #coding: UTF-8
-import detect_faces, info_analizer, list_faces, os, inspect, webbrowser, cognitive_face, time
+import detect_faces, list_faces, os, inspect, webbrowser, cognitive_face, time
 from PIL import Image
 
 def main():
@@ -31,35 +31,15 @@ def main():
         jsonFoto1 = foto1
         jsonFoto2 = foto2
 
-        print jsonFoto1
-
     infoPhoto1 = detect_faces.readFace(jsonFoto1, isURL)
     infoPhoto2 = detect_faces.readFace(jsonFoto2, isURL)
 
-    print infoPhoto1
+    id1 = infoPhoto1[0]['faceId']
+    id2 = infoPhoto2[0]['faceId']
 
-    jsonList1 = {"name": "sample_list_1"}
-    jsonList2 = {"name": "sample_list_2"}
+    print id1
+    print id2
 
-    print "WOLOLOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO"
-    print (int)(time.time() * 10)
-    listId = (int)(time.time() * 10)
-    # strId = (str) listId
-
-    list1 = list_faces.run()
-
-
-    # print (list1)
-
-    #print (infoPhoto2)
-    #print (infoPhoto1)
-
-    #cognitive_face.face_list.add_face(foto1,'{"faceListId":"pollo"}')
-
-    #print("CARA:\n")
-    #print(cognitive_face.face_list.get('{"faceListId":"pollo"}'))
-
-    #cognitive_face.face.find_similars(infoPhoto1[0]['faceId']);
-    #info_analizer.compare(infoPhoto1, infoPhoto2)
+    # list1 = list_faces.run()
 
 main()

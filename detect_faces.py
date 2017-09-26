@@ -34,7 +34,6 @@ params = urllib.urlencode({
 
 # Method for reading faces
 def readFace(path, isURL):
-    result = ''
 
     if isURL:
         headers['Content-Type'] = 'application/json'
