@@ -12,10 +12,10 @@ headers = {
 params = urllib.urlencode({
 })
 
-startUpBody = {
-    "name":"sample_list",
-    "userData":"User-provided data attached to the face list"
-}
+body = urllib.urlencode({
+    "name": "sample_list",
+    "userData": "User-provided data attached to the face list"
+})
 
 def createList():
 
@@ -25,8 +25,10 @@ def createList():
 
     try:
         conn = httplib.HTTPSConnection('westcentralus.api.cognitive.microsoft.com')
-        conn.request("PUT", "/face/v1.0/facelists/faceListId?%s" % params, startUpBody, headers)
+        conn.request("PUT", "/face/v1.0/facelists/{faceListId}?%s" % params, '{body}', headers)
+        print "CACA"
         response = conn.getresponse()
+        print response
         data = response.read()
 
         print "DATA:: "
@@ -34,6 +36,27 @@ def createList():
 
         conn.close()
     except Exception as e:
-        print("[Errno {0}] {1}".format(e.errno, e.strerror))
+        print("[Errno {0}] {1}".format(e.message, e.args))
 
-    return data
+def run():
+    ########### Python 2.7 #############
+    import httplib, urllib, base64
+
+    headers = {
+        # Request headers
+        'Content-Type': 'application/json',
+        'Ocp-Apim-Subscription-Key': '{subscription key}',
+    }
+
+    params = urllib.urlencode({
+    })
+
+    try:
+        conn = httplib.HTTPSConnection('westus.api.cognitive.microsoft.com')
+        conn.request("PUT", "/face/v1.0/facelists/{faceListId}?%s" % params, "{body}", headers)
+        response = conn.getresponse()
+        data = response.read()
+        print(data)
+        conn.close()
+    except Exception as e:
+        print("[Errno {0}] {1}".format(e.errno, e.strerror))

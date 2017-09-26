@@ -46,7 +46,7 @@ def main():
     listId = (int)(time.time() * 10)
     # strId = (str) listId
 
-    list1 = list_faces.createList()
+    list1 = list_faces.run()
 
 
     # print (list1)
