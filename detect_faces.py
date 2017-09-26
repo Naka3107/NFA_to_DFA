@@ -32,27 +32,6 @@ params = urllib.urlencode({
     #'age,gender,headPose,smile,facialHair,glasses,emotion,hair,makeup,occlusion,accessories,blur,exposure,noise'
 })
 
-
-# The URL of a JPEG image to analyze.
-#body = "{'url':'https://scontent.fntr4-1.fna.fbcdn.net/v/t1.0-9/18010854_1893085790717078_2637128141764059535_n.jpg?oh=b709287b84055329b57da85c67121459&oe=5A84D1A9'}"
-
-#try:
-    # Execute the REST API call and get the response.
-    #conn = httplib.HTTPSConnection('westcentralus.api.cognitive.microsoft.com')
-    #conn.request("POST", "/face/v1.0/detect?%s" % params, body, headers)
-    #response = conn.getresponse()
-    #data = response.read()
-
-    # 'data' contains the JSON data. The following formats the JSON data for display.
-    #parsed = json.loads(data)
-    #print ("Response:")
-    #print (json.dumps(parsed, sort_keys=True, indent=2))
-    #conn.close()
-
-#except Exception as e:
-    #print("[Errno {0}] {1}".format(e.errno, e.strerror))
-
-
 # Method for reading faces
 def readFace(path, isURL):
     result = ''
@@ -80,12 +59,12 @@ def readFace(path, isURL):
         # print ("Response:")
         # print (json.dumps(parsed, sort_keys=True, indent=2))
 
-        result = (json.dumps(parsed, sort_keys=True, indent=2))
+        # result = (json.dumps(parsed, sort_keys=True, indent=2))
 
         conn.close()
 
     except Exception as e:
         print("[Errno {0}] {1}".format(e.errno, e.strerror))
 
-    return result
+    return parsed
 

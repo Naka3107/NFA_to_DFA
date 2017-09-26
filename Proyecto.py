@@ -1,9 +1,9 @@
 #coding: UTF-8
-import detect_faces, info_analizer, os, inspect, webbrowser,list_faces,cognitive_face
+import detect_faces, info_analizer, list_faces, os, inspect, webbrowser, cognitive_face, time
 from PIL import Image
 
 def main():
-    isURL = True
+    isURL = False
 
     if isURL:
         # Change URL according to uses
@@ -41,9 +41,15 @@ def main():
     jsonList1 = {"name": "sample_list_1"}
     jsonList2 = {"name": "sample_list_2"}
 
-    list1=list_faces.ListFaces(jsonList1)
+    print "WOLOLOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO"
+    print (int)(time.time() * 10)
+    listId = (int)(time.time() * 10)
+    # strId = (str) listId
 
-    print (list1)
+    list1 = list_faces.createList()
+
+
+    # print (list1)
 
     #print (infoPhoto2)
     #print (infoPhoto1)
