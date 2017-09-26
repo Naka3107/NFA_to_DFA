@@ -1,3 +1,4 @@
+#coding: UTF-8
 import httplib, urllib, base64, json, cognitive_face
 
 ###############################################
@@ -32,8 +33,18 @@ params = urllib.urlencode({
 })
 
 # Method for reading faces
-def readFace(body):
+def readFace(path, isURL):
     result = ''
+
+    if isURL:
+        body = path
+    else:
+        headers['Content-Type'] = 'application/octet-stream'
+        filename = path
+        f = open(filename, "rb")
+        body = f.read()
+
+        f.close()
 
     try:
         # Execute the REST API call and get the response.

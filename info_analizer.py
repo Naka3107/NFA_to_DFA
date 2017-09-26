@@ -1,4 +1,4 @@
-
+#coding: UTF-8
 exclude = ['[', ']', '{', '}', ',', ' ', '\"', '']
 
 # Converts a JSON string into a matrix where each list is a person with usable values
