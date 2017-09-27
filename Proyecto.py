@@ -4,70 +4,57 @@
 #pip install vc2
 #pip install pillow
 
+import cv2, os, inspect, time
+# LOCAL
+import detect_faces
 
-import detect_faces, list_faces, video_frames, os, inspect, webbrowser, cognitive_face, time
-from PIL import Image
-from multiprocessing import Process
+# -----------------------------------------
+TOTAL_PHOTOS = 5                            # Fotos en memoria
+FperM = 20                                  # Fotos por minuto
+INTERVAL = 60 / FperM                       # Intervalo entre fotos
+# -----------------------------------------
 
-TOTAL_PHOTOS = 6
-INTERVAL = 3
+PATH = os.path.dirname(os.path.abspath(inspect.getfile(inspect.currentframe())))
+PATH = PATH.replace('\\', '/')
+imgPATH = PATH + "/Images/"
+vidPATH = PATH + "/Videos/"
 
-def function_1():
-
-        PATH = os.path.dirname(os.path.abspath(inspect.getfile(inspect.currentframe())))
-        PATH = PATH.replace('\\', '/')
-        PATH = PATH + "/Images/image_"
-
-        basePhoto = ""
-
-        photoNum = 0
-        counter = 0
-        while True:
-            comparablePhoto = PATH + str(photoNum) + ".jpg"
-
-            print comparablePhoto
-
-            # showImg1 = Image.open(foto1, 'r')
-            # showImg1.show()
-            # showImg2 = Image.open(foto2, 'r')
-            # showImg2.show()
-
-            try:
-
-                infoPhoto1 = detect_faces.readFace(comparablePhoto)
-                # infoPhoto2 = detect_faces.readFace(foto2)
-
-                print infoPhoto1
-                # print infoPhoto2
-                print "---------------------------------------------"
-
-                id1 = infoPhoto1[0]['faceId']
-                # id2 = infoPhoto2[0]['faceId']
-
-                print id1
-                # print id2
-
-                print "YYYYYYYYYY"
-                photoNum += 1
-                counter += 1
-
-            except Exception as e:
-                print "XXXXXXXXXX"
-                print e.args
-
-            if photoNum >= INTERVAL:
-                photoNum = 0
-
-            print photoNum
-            print "COUNTER:: "
-            print counter
+capture = cv2.VideoCapture(0)
 
 
-def function_2():
-    video_frames.record(TOTAL_PHOTOS, INTERVAL)
+# Record from live video
+def main(limit, interval):
 
-if __name__ == '__main__':
-    p1 = Process(target = function_1())
-    p1.start()
-    p2 = Process(target = function_2())
-    p2.start()
+    limit -= 1
+
+    # Changeable variable according to desired time
+    INITIAL = int(time.time())
+
+    while capture.isOpened():
+
+        infoPhoto = ""
+
+        # Current frame number
+        delta = int(time.time()) - INITIAL
+
+        if delta >= limit * interval:
+            INITIAL = int(time.time())
+
+        ret, frame = capture.read()
+
+        if not ret:
+            break
+
+        if (delta % interval == 0):
+
+            filename = imgPATH + "image_" + str(delta / interval) + ".jpg"
+            cv2.imwrite(filename, frame)
+
+            infoPhoto = detect_faces.readFace(filename)
+
+        print infoPhoto
+
+
+    capture.release()
+
+main(TOTAL_PHOTOS, INTERVAL)
