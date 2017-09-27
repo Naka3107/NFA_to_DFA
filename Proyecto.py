@@ -1,9 +1,16 @@
 #coding: UTF-8
+
+#pip install mumpy
+#pip install vc2
+#pip install pillow
+
+
 import detect_faces, list_faces, video_frames, os, inspect, webbrowser, cognitive_face, time
 from PIL import Image
 from multiprocessing import Process
 
-TOTAL_PHOTOS = 5
+TOTAL_PHOTOS = 6
+INTERVAL = 3
 
 def function_1():
 
@@ -14,8 +21,11 @@ def function_1():
         basePhoto = ""
 
         photoNum = 0
+        counter = 0
         while True:
-            comparablePhoto =  PATH + str(photoNum) + ".jpg"
+            comparablePhoto = PATH + str(photoNum) + ".jpg"
+
+            print comparablePhoto
 
             # showImg1 = Image.open(foto1, 'r')
             # showImg1.show()
@@ -39,19 +49,22 @@ def function_1():
 
                 print "YYYYYYYYYY"
                 photoNum += 1
+                counter += 1
 
             except Exception as e:
                 print "XXXXXXXXXX"
                 print e.args
 
-            if photoNum >= TOTAL_PHOTOS:
+            if photoNum >= INTERVAL:
                 photoNum = 0
 
             print photoNum
+            print "COUNTER:: "
+            print counter
 
 
 def function_2():
-    video_frames.record(TOTAL_PHOTOS)
+    video_frames.record(TOTAL_PHOTOS, INTERVAL)
 
 if __name__ == '__main__':
     p1 = Process(target = function_1())
