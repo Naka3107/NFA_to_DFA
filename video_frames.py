@@ -1,10 +1,16 @@
-import argparse
 import cv2
+import math
 
-vidcap = cv2.VideoCapture('C:\Users\Santino\Cmanai\SemanaiNKOTB\Videos\Video.mp4')
-vidcap.set(cv2.CAP_PROP_POS_MSEC,20000)      # just cue to 20 sec. position
-success,image = vidcap.read()
-if success:
-    cv2.imwrite("frame20sec.jpg", image)     # save frame as JPEG file
-    cv2.imshow("20sec",image)
-    cv2.waitKey()
+imagesFolder = "C:\Users\Santino\Cmanai\SemanaiNKOTB\Images"
+cap = cv2.VideoCapture("C:\Users\Santino\Cmanai\SemanaiNKOTB\Videos\Video.mp4")
+frameRate = cap.get(5) #frame rate
+while(cap.isOpened()):
+    frameId = cap.get(1) #current frame number
+    ret, frame = cap.read()
+    if (ret != True):
+        break
+    if (frameId % math.floor(frameRate) == 0):
+        filename = imagesFolder + "\image_" +  str(int(frameId)) + ".jpg"
+        cv2.imwrite(filename, frame)
+cap.release()
+print "Done!"
