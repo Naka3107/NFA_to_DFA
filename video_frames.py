@@ -7,6 +7,7 @@ vidPATH = PATH + "/Videos/"
 
 capture = cv2.VideoCapture(0)
 
+INTERVAL = 3
 
 # Record from live video
 def record(limit):
@@ -29,7 +30,7 @@ def record(limit):
         if not ret:
             break
 
-        if (delta % 1 == 0):
+        if (delta % INTERVAL == 0):
 
             filename = imgPATH + "image_" + str(delta) + ".jpg"
             cv2.imwrite(filename, frame)
