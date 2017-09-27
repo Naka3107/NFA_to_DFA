@@ -1,16 +1,36 @@
-import cv2
-import math
+import cv2, math, os, inspect, time
 
-imagesFolder = "C:\Users\Santino\Cmanai\SemanaiNKOTB\Images"
-cap = cv2.VideoCapture("C:\Users\Santino\Cmanai\SemanaiNKOTB\Videos\Video.mp4")
-frameRate = cap.get(5) #frame rate
-while(cap.isOpened()):
-    frameId = cap.get(1) #current frame number
-    ret, frame = cap.read()
-    if (ret != True):
+PATH = os.path.dirname(os.path.abspath(inspect.getfile(inspect.currentframe())))
+PATH = PATH.replace('\\', '/')
+imgPATH = PATH + "/Images/"
+vidPATH = PATH + "/Videos/"
+
+capture = cv2.VideoCapture(0)
+
+# Frame rate per second (FPS)
+framesPerSecond = capture.get(0)
+
+# Changeable variable according to desired time
+INITIAL = int(time.time())
+
+while capture.isOpened():
+
+    # Current frame number
+    delta = int(time.time()) - INITIAL
+
+    if delta >= 60:
+        INITIAL = int(time.time())
+
+    ret, frame = capture.read()
+
+    print (delta)
+
+    if not ret:
         break
-    if (frameId % math.floor(frameRate) == 0):
-        filename = imagesFolder + "\image_" +  str(int(frameId)) + ".jpg"
+
+    if (delta % 1 == 0):
+
+        filename = imgPATH + "image_" + str(delta) + ".jpg"
         cv2.imwrite(filename, frame)
-cap.release()
-print "Done!"
+
+capture.release()

@@ -20,8 +20,8 @@ def main():
         PATH = PATH.replace('\\', '/')
         PATH = PATH + "/Images/"
 
-        foto1 = PATH + "b1.jpg"
-        foto2 = PATH + "b2.jpg"
+        foto1 = PATH + "a1.jpg"
+        foto2 = PATH + "a2.jpg"
 
         showImg1 = Image.open(foto1, 'r')
         showImg1.show()
@@ -33,6 +33,10 @@ def main():
 
     infoPhoto1 = detect_faces.readFace(jsonFoto1, isURL)
     infoPhoto2 = detect_faces.readFace(jsonFoto2, isURL)
+
+    print infoPhoto1
+    print infoPhoto2
+    print "---------------------------------------------"
 
     id1 = infoPhoto1[0]['faceId']
     id2 = infoPhoto2[0]['faceId']

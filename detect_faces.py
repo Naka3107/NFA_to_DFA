@@ -28,7 +28,7 @@ headers = {
 params = urllib.urlencode({
     'returnFaceId': 'true',
     'returnFaceLandmarks': 'true',
-    #'returnFaceAttributes': 'age,gender,smile,facialHair,hair',
+    'returnFaceAttributes': 'age,gender,smile,facialHair,hair',
     #'age,gender,headPose,smile,facialHair,glasses,emotion,hair,makeup,occlusion,accessories,blur,exposure,noise'
 })
 
