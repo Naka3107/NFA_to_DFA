@@ -1,26 +1,12 @@
 #coding: UTF-8
 import httplib, urllib, base64, json, cognitive_face
 
-###############################################
-#### Update or verify the following values. ###
-###############################################
-
-# Replace the subscription_key string value with your valid subscription key.
 subscription_key = '4c9d869cdd3a4adba127a880088daac4'
-
-# Replace or verify the region.
-#
-# You must use the same region in your REST API call as you used to obtain your subscription keys.
-# For example, if you obtained your subscription keys from the westus region, replace
-# "westcentralus" in the URI below with "westus".
-#
-# NOTE: Free trial subscription keys are generated in the westcentralus region, so if you are using
-# a free trial subscription key, you should not need to change this region.
-uri_base = 'westcentralus.api.cognitive.microsoft.com'
+# uri_base = 'westcentralus.api.cognitive.microsoft.com'
 
 # Request headers.
 headers = {
-    'Content-Type': 'application/json',
+    'Content-Type': 'application/octet-stream',
     'Ocp-Apim-Subscription-Key': subscription_key,
 }
 
@@ -32,19 +18,15 @@ params = urllib.urlencode({
     #'age,gender,headPose,smile,facialHair,glasses,emotion,hair,makeup,occlusion,accessories,blur,exposure,noise'
 })
 
+
 # Method for reading faces
-def readFace(path, isURL):
+def readFace(path):
 
-    if isURL:
-        headers['Content-Type'] = 'application/json'
-        body = path
-    else:
-        headers['Content-Type'] = 'application/octet-stream'
-        filename = path
-        f = open(filename, "rb")
-        body = f.read()
+    filename = path
+    f = open(filename, "rb")
+    body = f.read()
 
-        f.close()
+    f.close()
 
     try:
         # Execute the REST API call and get the response.

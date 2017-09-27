@@ -7,30 +7,31 @@ vidPATH = PATH + "/Videos/"
 
 capture = cv2.VideoCapture(0)
 
-# Frame rate per second (FPS)
-framesPerSecond = capture.get(0)
 
-# Changeable variable according to desired time
-INITIAL = int(time.time())
+# Record from live video
+def record(limit):
 
-while capture.isOpened():
+    # Changeable variable according to desired time
+    INITIAL = int(time.time())
 
-    # Current frame number
-    delta = int(time.time()) - INITIAL
+    while capture.isOpened():
 
-    if delta >= 60:
-        INITIAL = int(time.time())
+        # Current frame number
+        delta = int(time.time()) - INITIAL
 
-    ret, frame = capture.read()
+        if delta >= limit:
+            INITIAL = int(time.time())
 
-    print (delta)
+        ret, frame = capture.read()
 
-    if not ret:
-        break
+        print (delta)
 
-    if (delta % 1 == 0):
+        if not ret:
+            break
 
-        filename = imgPATH + "image_" + str(delta) + ".jpg"
-        cv2.imwrite(filename, frame)
+        if (delta % 1 == 0):
 
-capture.release()
+            filename = imgPATH + "image_" + str(delta) + ".jpg"
+            cv2.imwrite(filename, frame)
+
+    capture.release()

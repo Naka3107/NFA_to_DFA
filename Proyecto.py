@@ -1,49 +1,60 @@
 #coding: UTF-8
-import detect_faces, list_faces, os, inspect, webbrowser, cognitive_face, time
+import detect_faces, list_faces, video_frames, os, inspect, webbrowser, cognitive_face, time
 from PIL import Image
+from multiprocessing import Process
 
-def main():
-    isURL = False
+TOTAL_PHOTOS = 5
 
-    if isURL:
-        # Change URL according to uses
-        foto1 = "https://pbs.twimg.com/profile_images/902026418355290112/ZaPrOTYn_400x400.jpg"
-        foto2 = "https://s-media-cache-ak0.pinimg.com/originals/bd/06/5f/bd065f6cd8635d4817e432d26d72bed7.jpg"
+def function_1():
 
-        webbrowser.open(foto1)
-        webbrowser.open(foto2)
-
-        jsonFoto1 = "{'url':'" + foto1 + "'}"
-        jsonFoto2 = "{'url':'" + foto2 + "'}"
-    else:
         PATH = os.path.dirname(os.path.abspath(inspect.getfile(inspect.currentframe())))
         PATH = PATH.replace('\\', '/')
-        PATH = PATH + "/Images/"
+        PATH = PATH + "/Images/image_"
 
-        foto1 = PATH + "a1.jpg"
-        foto2 = PATH + "a2.jpg"
+        basePhoto = ""
 
-        showImg1 = Image.open(foto1, 'r')
-        showImg1.show()
-        showImg2 = Image.open(foto2, 'r')
-        showImg2.show()
+        photoNum = 0
+        while True:
+            comparablePhoto =  PATH + str(photoNum) + ".jpg"
 
-        jsonFoto1 = foto1
-        jsonFoto2 = foto2
+            # showImg1 = Image.open(foto1, 'r')
+            # showImg1.show()
+            # showImg2 = Image.open(foto2, 'r')
+            # showImg2.show()
 
-    infoPhoto1 = detect_faces.readFace(jsonFoto1, isURL)
-    infoPhoto2 = detect_faces.readFace(jsonFoto2, isURL)
+            try:
 
-    print infoPhoto1
-    print infoPhoto2
-    print "---------------------------------------------"
+                infoPhoto1 = detect_faces.readFace(comparablePhoto)
+                # infoPhoto2 = detect_faces.readFace(foto2)
 
-    id1 = infoPhoto1[0]['faceId']
-    id2 = infoPhoto2[0]['faceId']
+                print infoPhoto1
+                # print infoPhoto2
+                print "---------------------------------------------"
 
-    print id1
-    print id2
+                id1 = infoPhoto1[0]['faceId']
+                # id2 = infoPhoto2[0]['faceId']
 
-    # list1 = list_faces.run()
+                print id1
+                # print id2
 
-main()
+                print "YYYYYYYYYY"
+                photoNum += 1
+
+            except Exception as e:
+                print "XXXXXXXXXX"
+                print e.args
+
+            if photoNum >= TOTAL_PHOTOS:
+                photoNum = 0
+
+            print photoNum
+
+
+def function_2():
+    video_frames.record(TOTAL_PHOTOS)
+
+if __name__ == '__main__':
+    p1 = Process(target = function_1())
+    p1.start()
+    p2 = Process(target = function_2())
+    p2.start()

@@ -3,19 +3,23 @@ import httplib, urllib, base64
 subscription_key = '4c9d869cdd3a4adba127a880088daac4'
 # uri_base = 'westcentralus.api.cognitive.microsoft.com'
 
+# Request headers.
 headers = {
     # Request headers
     'Content-Type': 'application/json',
     'Ocp-Apim-Subscription-Key':  subscription_key,
 }
 
+# Request parameters.
 params = urllib.urlencode({
 })
 
+# Request body.
 body = urllib.urlencode({
     "name": "sample_list",
     "userData": "User-provided data attached to the face list"
 })
+
 
 def createList():
 
